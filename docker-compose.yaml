@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  mediator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000" # WebSocket
+      - "8001:8001" # Admin API
+      - "8010:8010" # HTTP
+    volumes:
+      - mediator_data:/data
+    environment:
+      - ADMIN_API_KEY=secure-key
+      - JWT_SECRET=secure-jwt
+      - WALLET_KEY=secure-wallet-key
+    networks:
+      - ticket-network
+networks:
+  ticket-network:
+    driver: bridge
+volumes:
+  mediator_data:
